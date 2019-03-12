@@ -66,6 +66,27 @@ def remove_start(volname, bricks, replica=None, force=False):
     return volume_execute(cmd)
 
 
+def remove_force(volname, bricks, replica=None, force=False):
+    """
+    Force Remove Bricks
+
+    :param volname: Volume Name
+    :param bricks: List of Bricks
+    :param replica: Replica Count
+    :param force: True|False Force Remove Bricks
+    :returns: Output of remove-brick start command, raises
+     GlusterCmdException((rc, out, err)) on error
+    """
+    cmd = ["remove-brick", volname]
+    if replica is not None:
+        cmd += ["replica", "{0}".format(replica)]
+
+    cmd += bricks
+    cmd += ["force"]
+
+    return volume_execute(cmd)
+    
+
 def remove_stop(volname, bricks, replica=None, force=False):
     """
     Remove Bricks stop
